@@ -1,0 +1,99 @@
+basePath: /
+definitions:
+  controllers.CreateBuildingResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  controllers.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  controllers.GetBuildingsResponse:
+    properties:
+      buildings:
+        items:
+          $ref: '#/definitions/models.Building'
+        type: array
+    type: object
+  models.Building:
+    properties:
+      city:
+        type: string
+      floors:
+        type: integer
+      name:
+        type: string
+      year:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API for managing buildings
+  title: Building Service API
+  version: "1.0"
+paths:
+  /buildings:
+    get:
+      consumes:
+      - application/json
+      description: Get list of buildings with optional filters
+      parameters:
+      - description: City
+        in: query
+        name: city
+        type: string
+      - description: Year
+        in: query
+        name: year
+        type: integer
+      - description: Number of floors
+        in: query
+        name: floors
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.GetBuildingsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      summary: Get list of buildings
+      tags:
+      - buildings
+    post:
+      consumes:
+      - application/json
+      description: Add a new building to the database
+      parameters:
+      - description: Building
+        in: body
+        name: building
+        required: true
+        schema:
+          $ref: '#/definitions/models.Building'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.CreateBuildingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      summary: Create a new building
+      tags:
+      - buildings
+swagger: "2.0"
