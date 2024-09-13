@@ -20,7 +20,6 @@ import (
 func CreateBuilding(c *gin.Context) {
 	var building models.Building
 
-	// Привязка JSON к структуре
 	if err := c.ShouldBindJSON(&building); err != nil {
 		c.JSON(http.StatusBadRequest, ErrorResponse{Message: "Invalid input"})
 		return
@@ -62,17 +61,14 @@ func GetBuildings(c *gin.Context) {
 	c.JSON(http.StatusOK, GetBuildingsResponse{Buildings: buildings})
 }
 
-// CreateBuildingResponse represents the response for a successful building creation
 type CreateBuildingResponse struct {
 	Message string `json:"message"`
 }
 
-// GetBuildingsResponse represents the response for fetching buildings
 type GetBuildingsResponse struct {
 	Buildings []models.Building `json:"buildings"`
 }
 
-// ErrorResponse represents a generic error response
 type ErrorResponse struct {
 	Message string `json:"message"`
 }

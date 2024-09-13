@@ -4,7 +4,6 @@ import (
 	"building_service/db"
 )
 
-// Building represents a building in the system
 type Building struct {
 	Name   string `json:"name"`
 	City   string `json:"city"`
@@ -12,14 +11,12 @@ type Building struct {
 	Floors int    `json:"floors"`
 }
 
-// CreateBuilding inserts a new building into the database
 func CreateBuilding(building Building) error {
 	query := `INSERT INTO buildings (name, city, year, floors) VALUES ($1, $2, $3, $4)`
 	_, err := db.DB.Exec(query, building.Name, building.City, building.Year, building.Floors)
 	return err
 }
 
-// GetBuildings retrieves buildings from the database with optional filters
 func GetBuildings(city, year, floors string) ([]Building, error) {
 	query := "SELECT name, city, year, floors FROM buildings WHERE 1=1"
 	var args []interface{}

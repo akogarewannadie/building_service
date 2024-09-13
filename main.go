@@ -22,14 +22,13 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not load config: %v", err)
 	}
-	db.InitDB(cfg) // Передаем указатель на Config
+	db.InitDB(cfg)
 
 	r := gin.Default()
 
 	r.POST("/buildings", controllers.CreateBuilding)
 	r.GET("/buildings", controllers.GetBuildings)
 
-	// Swagger documentation endpoint
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	r.Run(":8080")

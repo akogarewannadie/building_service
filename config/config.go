@@ -15,13 +15,12 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-	// Загружаем .env файл
+
 	err := godotenv.Load()
 	if err != nil {
 		return nil, fmt.Errorf("error loading .env file: %v", err)
 	}
 
-	// Читаем переменные окружения
 	config := &Config{
 		DBHost:     os.Getenv("HOST"),
 		DBPort:     os.Getenv("PORT"),
