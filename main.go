@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files" // Swagger files handler
 	"github.com/swaggo/gin-swagger"        // Swagger middleware
-	"log"
+	"time"
 )
 
 // @title Building Service API
@@ -18,10 +18,10 @@ import (
 // @BasePath /
 
 func main() {
-	cfg, err := config.LoadConfig()
-	if err != nil {
-		log.Fatalf("Could not load config: %v", err)
-	}
+	cfg := config.LoadConfig()
+
+	time.Sleep(5 * time.Second)
+
 	db.InitDB(cfg)
 
 	r := gin.Default()

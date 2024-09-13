@@ -1,11 +1,10 @@
 package config
 
 import (
-	"fmt"
-	"github.com/joho/godotenv"
-	"os"
+	"log"
 )
 
+// Config структура для хранения конфигурации базы данных
 type Config struct {
 	DBHost     string
 	DBPort     string
@@ -14,27 +13,15 @@ type Config struct {
 	DBName     string
 }
 
-func LoadConfig() (*Config, error) {
-
-	err := godotenv.Load()
-	if err != nil {
-		return nil, fmt.Errorf("error loading .env file: %v", err)
-	}
-
+// LoadConfig функция для загрузки конфигурации
+func LoadConfig() *Config {
 	config := &Config{
-		DBHost:     os.Getenv("HOST"),
-		DBPort:     os.Getenv("PORT"),
-		DBUser:     os.Getenv("USER"),
-		DBPassword: os.Getenv("PASSWORD"),
-		DBName:     os.Getenv("DBNAME"),
+		DBHost:     "db",
+		DBPort:     "5432",
+		DBUser:     "postgres",
+		DBPassword: "12345678",
+		DBName:     "building_service",
 	}
-	fmt.Println("db working")
-	return config, nil
-}
-
-func getEnv(key, fallback string) string {
-	if value, exists := os.LookupEnv(key); exists {
-		return value
-	}
-	return fallback
+	log.Println("DB config loaded successfully")
+	return config
 }
